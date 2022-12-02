@@ -20,11 +20,11 @@ const renderMovies = (filter = '') => {
     filteredMovies.forEach((movie) => {
       const movieEl = document.createElement('li');
       const {info} = movie; //This is equals to movie.info
-      let text = movie.info.title + ' - ';
+      let text = info.title + ' - ';
 
-      for(const key in movie.info) {
+      for(const key in info) {
          if(key != 'title') {
-          text += `${key} : ${movie.info[key]}`;
+          text += `${key} : ${info[key]}`;
          }
       }
       movieEl.textContent = text;
