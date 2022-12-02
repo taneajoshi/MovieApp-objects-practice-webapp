@@ -3,7 +3,8 @@ const searchBtn = document.getElementById('search-btn');
 
 const movies = [];
 
-const renderMovies = () => {
+//By default filter argument will be empty if we dont pass the value. 
+const renderMovies = (filter = '') => {
    const movieList = document.getElementById('movie-list');
    if (movies.length === 0) {
      movieList.classList.remove('visible');
@@ -13,8 +14,12 @@ const renderMovies = () => {
     
     movieList.innerHTML = ''; 
 
-    movies.forEach((movie) => {
+    // FILTERED MOVIES
+    const filteredMovies = !filter ? movies : movies.filter((movie) => movie.info.title.includes(filter));
+
+    filteredMovies.forEach((movie) => {
       const movieEl = document.createElement('li');
+      const {info} = movie; //This is equals to movie.info
       let text = movie.info.title + ' - ';
 
       for(const key in movie.info) {
@@ -56,4 +61,12 @@ const addMovieHandler = () => {
      document.getElementById('extra-value').value = '';
 }
 
+//Search movies functionality
+const searchMovieHandler = () => {
+  const filterTerm = document.getElementById('filter-title').value;
+
+  renderMovies(filterTerm);
+}
+
 addMovieBtn.addEventListener('click', addMovieHandler);
+searchBtn.addEventListener('click', searchMovieHandler);
