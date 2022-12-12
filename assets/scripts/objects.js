@@ -23,7 +23,7 @@ const renderMovies = (filter = '') => {
       let text = info.title + ' - ';
 
       for(const key in info) {
-         if(key != 'title') {
+         if(key != 'title' && key != '_title') {
           text += `${key} : ${info[key]}`;
          }
       }
@@ -46,11 +46,22 @@ const addMovieHandler = () => {
      const newMovie = {
       //title: title : shorthand if we have exact same key and value name then we can omit : and the value
       info: {
-        title,
+        set title(val) {
+          if(val.trim() == '') {
+            this._title = 'Default';
+            return;
+          }
+          this._title = val;
+        },
+        get title() {
+          return this._title;
+        },
         [extraName]: extraValue
       },
       id: Math.random()*10,
      }  
+
+     newMovie.info.title = title;
 
      movies.push(newMovie);
 
